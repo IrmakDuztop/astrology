@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AstroAI - Doğum Haritası Analizi</title>
+    <meta name="description" content="AstroAI ile detaylı ve kişiselleştirilmiş doğum haritası analizinizi alın.">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Marked.js for parsing markdown from Gemini -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="stars-bg"></div>
+    <div id="zodiac-tooltip" class="tooltip hidden"></div>
+
+    <div class="container">
+        
+        <div class="layout-grid">
+            <div class="left-panel">
+                <header>
+                    <h1>AstroAI</h1>
+                    <p>Yıldızların Sessiz Rehberliği</p>
+                </header>
+
+                <main>
+                    <section id="form-section" class="panel">
+                        <form id="chart-form">
+                            <div class="form-group">
+                                <label for="name">Adınız Soyadınız</label>
+                                <input type="text" id="name" name="name" required placeholder="Örn: Ayşe Yılmaz">
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="birth_date">Doğum Tarihi</label>
+                                    <input type="date" id="birth_date" name="birth_date" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="birth_time">Doğum Saati (24s)</label>
+                                    <input type="time" id="birth_time" name="birth_time" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="birth_place">Doğum Yeri</label>
+                                <input type="text" id="birth_place" name="birth_place" required placeholder="Örn: İstanbul, Türkiye">
+                            </div>
+
+                            <button type="submit" id="submit-btn">
+                                <span class="btn-text">Haritamı Analiz Et</span>
+                            </button>
+                        </form>
+                    </section>
+
+                    <section id="loading-section" class="panel hidden">
+                        <div id="loading-status">Yıldızların konumları hesaplanıyor...</div>
+                    </section>
+
+                </main>
+                
+                <footer>
+                    <p>AstroAI, sadece potansiyelleri yansıtır, kesin hüküm içermez.</p>
+                </footer>
+            </div>
+
+            <div class="right-panel">
+                <div class="astro-wheel-container">
+                    <svg class="astro-wheel" viewBox="0 0 400 400">
+                        <!-- Concentric Circles -->
+                        <circle cx="200" cy="200" r="180" class="wheel-circle" />
+                        <circle cx="200" cy="200" r="140" class="wheel-circle" />
+                        <circle cx="200" cy="200" r="50" class="wheel-circle" />
+                        
+                        <!-- House Lines -->
+                        <g id="house-lines">
+                            <!-- Populated via JS -->
+                        </g>
+
+                        <!-- Zodiac Glyphs -->
+                        <g id="zodiac-glyphs">
+                            <!-- Populated via JS -->
+                        </g>
+
+                        <!-- Planet Glyphs (to be animated) -->
+                        <g id="planet-glyphs">
+                            <!-- Populated via JS -->
+                        </g>
+                    </svg>
+                </div>
+                
+                <section id="result-section" class="panel hidden">
+                    <div class="result-header">
+                        <h2>Doğum Haritası Analiziniz</h2>
+                        <button id="reset-btn" class="secondary-btn">Yeni Harita</button>
+                    </div>
+                    <div id="result-content" class="markdown-body">
+                        <!-- LLM output will be injected here -->
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
